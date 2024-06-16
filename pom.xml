@@ -16,15 +16,22 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>zim-repo</id>
+			<name>libs-release-local</name>
+			<url>https://artifactory.dokuma.digital/artifactory/libs-release-local</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>rw.eccelanza</groupId>
-			<artifactId>Core-Module</artifactId>
-			<version>1.4-SNAPSHOT</version>
+			<groupId>zw.eccellenza</groupId>
+			<artifactId>core-module</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>
