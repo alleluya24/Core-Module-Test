@@ -16,11 +16,12 @@ import rw.eccelanza.identityregistration.service.IIdNumberVerificationService;
 @RequiredArgsConstructor
 @RequestMapping("/id")
 public class IdRegistrationController {
-    private final IIdNumberVerificationService idValidationService;
+  private final IIdNumberVerificationService idValidationService;
 
-    @GetMapping("verify")
-    public ResponseEntity<Mono<IdNumberVerificationResponseDto>> verifyId(@RequestParam("id") String id) {
-        return new ResponseEntity<>(
-                idValidationService.validateId(id), org.springframework.http.HttpStatus.OK);
-    }
+  @GetMapping("verify")
+  public ResponseEntity<Mono<IdNumberVerificationResponseDto>> verifyId(
+      @RequestParam("id") String id) {
+    return new ResponseEntity<>(
+        idValidationService.validateId(id), org.springframework.http.HttpStatus.OK);
+  }
 }
