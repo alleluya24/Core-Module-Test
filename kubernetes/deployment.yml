@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: shared
-  name: core-backend
+  name: core-module
   labels:
-    app: core-backend
+    app: core-module
 spec:
   replicas: 1
   selector:
      matchLabels:
-       app: core-backend
+       app: core-module
   template:
     metadata:
       labels:
-        app: core-backend
+        app: core-module
     spec:
       containers:
-       - name: core-backend
+       - name: core-module
          image: gitlab.dokuma.digital:5050/eccellenza/shared-modules/core-module:PROFILE
          imagePullPolicy: Always
          ports:
@@ -30,6 +30,6 @@ metadata:
   name: core-backend-svc
 spec:
   selector:
-    app: core-backend
+    app: core-module
   ports:
   - port: 8080
