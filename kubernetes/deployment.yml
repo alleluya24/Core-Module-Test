@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
        - name: core-backend
-         image: gitlab.dokuma.digital:5050/eccellenza/shared-modules/shared-modules/core-module:PROFILE
+         image: gitlab.dokuma.digital:5050/eccellenza/shared-modules/core-module:PROFILE
          imagePullPolicy: Always
          ports:
          - containerPort: 8080
