@@ -57,6 +57,8 @@ jobs:
           method: service-account
           k8s-url: ${{ secrets.KUBERNETES_URL }}
           k8s-secret: ${{ secrets.KUBERNETES_SECRET }}
+      - name: Delete existing deployment
+        run: kubectl delete deployment core-module -n shared
       - name: Deploy to the Kubernetes cluster
         uses: azure/k8s-deploy@v5
         with:
