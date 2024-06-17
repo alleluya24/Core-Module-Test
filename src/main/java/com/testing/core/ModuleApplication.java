@@ -7,9 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(
     basePackages = {
-      "rw.eccelanza.identityregistration",
-      "rw.eccelanza.shared.infrastructure",
-      "rw.eccelanza.objectstorage",
+      "rw.eccellenza.core.identityregistration",
+      "rw.eccellenza.core.infrastructure",
+      "rw.eccellenza.core.objectstorage",
       "com.testing.core"
     })
 public class ModuleApplication {
