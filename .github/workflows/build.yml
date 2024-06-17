@@ -3,7 +3,7 @@ run-name: Triggered by ${{ github.actor }}
 on:
   pull_request:
     branches:
-      - master
+      - main
 jobs:
   build-application:
     runs-on: ubuntu-24.04
