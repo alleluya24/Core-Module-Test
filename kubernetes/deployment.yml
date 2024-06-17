@@ -11,13 +11,25 @@ spec:
     matchLabels:
        app: core-module
   template:
-    metadata:
-      labels:
-        app: core-module
-    spec:
-      containers:
-       - name: core-module
-         image: gitlab.dokuma.digital:5050/eccellenza/shared-modules/core-module:PROFILE
-         imagePullPolicy: Always
-         ports:
-         - containerPort: 8080
+     metadata:
+        labels:
+          app: core-module
+     spec:
+       containers:
+          - name: core-module
+            image: gitlab.dokuma.digital:5050/eccellenza/shared-modules/core-module:PROFILE
+            imagePullPolicy: Always
+            ports:
+              - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+   namespace: shared
+   name: core-backend-svc
+spec:
+  selector:
+      app: core-module
+  ports:
+    - port: 8080
