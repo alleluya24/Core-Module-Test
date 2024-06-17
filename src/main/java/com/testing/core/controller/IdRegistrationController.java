@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-import rw.eccelanza.identityregistration.dto.IdNumberVerificationResponseDto;
-import rw.eccelanza.identityregistration.service.IIdNumberVerificationService;
+import rw.eccellenza.core.identityregistration.dto.IdNumberVerificationResponseDto;
+import rw.eccellenza.core.identityregistration.service.IIdNumberVerificationService;
 
 @Slf4j
 @RestController
