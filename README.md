@@ -15,7 +15,6 @@ After you cloned the repo, replace the application.properties with the values:
 Then run the following command, at the root of the project to start the application:
 
 ```shell
- mvn install:install-file -Dfile=./core-module-1.4-SNAPSHOT.jar -DgroupId=rw.eccelanza -DartifactId=Core-Module -Dversion=1.4-SNAPSHOT -Dpackaging=jar
  mvn spring-boot:run
 ```
 After the service is up and running, you can access the following endpoints:
