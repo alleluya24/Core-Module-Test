@@ -1,11 +1,13 @@
 package com.testing.core.controller;
 
+import com.testing.core.dto.ObjectResponseDto;
 import io.minio.messages.Item;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,7 @@ public class ObjectStorageController {
 
   private final IObjectStorage objectStorage;
 
-  @PostMapping("/upload")
+  @PostMapping("/uploadFile")
   public ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file) {
     // Check if the file is not empty
     if (file.isEmpty()) {
@@ -41,18 +43,61 @@ public class ObjectStorageController {
     }
   }
 
-  @GetMapping("/get")
-  public void getObject(@RequestParam("object") String object, HttpServletResponse response)
-      throws IOException {
-    InputStream inputStream = objectStorage.getObject(Path.of(object));
+  @PostMapping("/uploadFileWithPath")
+  public ResponseEntity<String> handleFileUploadWithPath(
+      @RequestParam("file") MultipartFile file, @RequestParam String filePath) {
+    // Check if the file is not empty
+    if (file.isEmpty()) {
+      return new ResponseEntity<>("Please select a file to upload", HttpStatus.BAD_REQUEST);
+    }
+    try {
+      Path path = Path.of(filePath + Objects.requireNonNull(file.getOriginalFilename()));
+      objectStorage.save(path, file.getInputStream());
+      return new ResponseEntity<>(
+          "Successfully uploaded: " + file.getOriginalFilename(), HttpStatus.OK);
+    } catch (Exception e) {
+      return new ResponseEntity<>("Failed to upload the file", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 
-    // Set the content type and attachment header.
-    response.addHeader("Content-disposition", "attachment;filename=" + object);
-    response.setContentType(URLConnection.guessContentTypeFromName(object));
+  /**
+   * get file url
+   *
+   * @param source
+   * @return
+   */
+  @PostMapping("/uploadImage")
+  public void uploadImage(
+      @RequestParam("source") String source, @RequestParam("base64Image") String base64Image) {
+    Path path = Path.of(Objects.requireNonNull(source));
+    objectStorage.uploadImage(base64Image, path);
+  }
 
-    // Copy the stream to the response's output stream.
-    IOUtils.copy(inputStream, response.getOutputStream());
-    response.flushBuffer();
+  @GetMapping("/getFile")
+  public ResponseEntity<String> getObject(
+      @RequestParam("object") String object, HttpServletResponse response) throws IOException {
+    try {
+      InputStream inputStream = objectStorage.getObject(Path.of(object));
+
+      // Set the content type and attachment header.
+      response.addHeader("Content-disposition", "attachment;filename=" + object);
+      response.setContentType(URLConnection.guessContentTypeFromName(object));
+
+      // Copy the stream to the response's output stream.
+      IOUtils.copy(inputStream, response.getOutputStream());
+      response.flushBuffer();
+
+    } catch (Exception e) {
+      log.error("Failed to get Object");
+    }
+    return new ResponseEntity<>("Object not Found", HttpStatus.NOT_FOUND);
+  }
+
+  @DeleteMapping("/deleteFile")
+  public ResponseEntity<String> deleteFile(@RequestParam("source") String file) {
+    Path path = Path.of(Objects.requireNonNull(file));
+    objectStorage.remove(path);
+    return new ResponseEntity<>("Object deleted", HttpStatus.OK);
   }
 
   @GetMapping("/info")
@@ -106,50 +151,77 @@ public class ObjectStorageController {
     }
   }
 
-  /**
-   * get file url
-   *
-   * @param source
-   * @return
-   */
-  @PostMapping("/uploadImage")
-  public void uploadImage(
-      @RequestParam("source") String source, @RequestParam("base64Image") String base64Image) {
-    Path path = Path.of(Objects.requireNonNull(source));
-    objectStorage.uploadImage(base64Image, path);
-  }
-
   @GetMapping("/objectExists")
   public ResponseEntity<String> objectExists(@RequestParam("source") String file) {
-    Path path = Path.of(Objects.requireNonNull(file));
-    if (objectStorage.objectExist(path)) {
-      return new ResponseEntity<>("Object Exists", HttpStatus.OK);
-    } else {
+    try {
+      Path path = Path.of(Objects.requireNonNull(file));
+      if (objectStorage.objectExist(path)) {
+        return new ResponseEntity<>("Object Exists", HttpStatus.OK);
+      } else {
+        return new ResponseEntity<>("Object Does not exists", HttpStatus.NOT_FOUND);
+      }
+    } catch (Exception e) {
       return new ResponseEntity<>("Object Does not exists", HttpStatus.NOT_FOUND);
     }
   }
 
   @GetMapping("/getObjectInChunks")
-  public void getObject(
+  public ResponseEntity<String> getObject(
       @RequestParam("object") String object,
       @RequestParam("offset") Long offset,
       @RequestParam("length") Long length,
       HttpServletResponse response)
       throws IOException {
-    InputStream inputStream = objectStorage.getInputStream(Path.of(object), offset, length);
+    try {
+      InputStream inputStream = objectStorage.getInputStream(Path.of(object), offset, length);
 
-    // Set the content type and attachment header.
-    response.addHeader("Content-disposition", "attachment;filename=" + object);
-    response.setContentType(URLConnection.guessContentTypeFromName(object));
+      // Set the content type and attachment header.
+      response.addHeader("Content-disposition", "attachment;filename=" + object);
+      response.setContentType(URLConnection.guessContentTypeFromName(object));
 
-    // Copy the stream to the response's output stream.
-    IOUtils.copy(inputStream, response.getOutputStream());
-    response.flushBuffer();
+      // Copy the stream to the response's output stream.
+      IOUtils.copy(inputStream, response.getOutputStream());
+      response.flushBuffer();
+
+    } catch (Exception e) {
+      log.error("Can not get Object in chunks");
+    }
+    return new ResponseEntity<>("Can not get Object in chunks", HttpStatus.NOT_FOUND);
   }
 
-  @GetMapping("/fullList/prefix")
-  public List<Item> getFullListByPrefix(@RequestParam("fileName") String fileName) {
+  @GetMapping("/listFiles/prefix")
+  public ResponseEntity<List<ObjectResponseDto>> getFullListByPrefix(
+      @RequestParam("fileName") String fileName) {
     Path path = Path.of(Objects.requireNonNull(fileName));
-    return objectStorage.getFullList(path);
+    List<Item> results = objectStorage.getFullList(path);
+    List<ObjectResponseDto> response = new ArrayList<>();
+    // for each item in the results, print the object name
+    for (Item item : results) {
+      ObjectResponseDto objectResponseDto =
+          new ObjectResponseDto(
+              item.objectName(),
+              String.valueOf(item.size()),
+              item.isDir(),
+              item.isDir() ? "" : item.lastModified().toString());
+      response.add(objectResponseDto);
+    }
+    return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @GetMapping("/listFiles")
+  public ResponseEntity<List<ObjectResponseDto>> getFullListByPrefix() {
+    List<Item> results = objectStorage.list();
+    List<ObjectResponseDto> response = new ArrayList<>();
+    // for each item in the results, print the object name
+    for (Item item : results) {
+      ObjectResponseDto objectResponseDto =
+          new ObjectResponseDto(
+              item.objectName(),
+              String.valueOf(item.size()),
+              item.isDir(),
+              item.isDir() ? "" : item.lastModified().toString());
+      response.add(objectResponseDto);
+    }
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 }
