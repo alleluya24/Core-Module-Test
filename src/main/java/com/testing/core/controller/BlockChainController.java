@@ -97,13 +97,13 @@ public class BlockChainController {
                     log.info("error ");
                     return response;
                   })
-              .doOnError(error -> log.error("Error creating deeds: {}", error.getMessage()))
+              .doOnError(error -> log.error("Error creating deed: {}", error.getMessage()))
               .doOnSuccess(success -> log.info("creating deeds completed"));
 
       return ResponseEntity.ok(responseMono);
 
     } catch (Exception e) {
-      log.error("Exception creating deeds: ", e);
+      log.error("Exception creating deed: ", e);
       return ResponseEntity.status(500)
           .body(Mono.just(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase()));
     }
