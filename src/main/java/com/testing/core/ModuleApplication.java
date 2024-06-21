@@ -7,10 +7,12 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(
     basePackages = {
+      "com.testing.core",
       "rw.eccellenza.core.identityregistration",
       "rw.eccellenza.core.infrastructure",
       "rw.eccellenza.core.objectstorage",
-      "com.testing.core"
+      "rw.eccellenza.core.notification",
+      "rw.eccellenza.core.utils",
     })
 public class ModuleApplication {
 
