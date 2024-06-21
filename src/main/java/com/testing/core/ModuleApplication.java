@@ -13,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
       "rw.eccellenza.core.objectstorage",
       "rw.eccellenza.core.notification",
       "rw.eccellenza.core.utils",
+      "rw.eccellenza.core.blockChainIntegration"
     })
 public class ModuleApplication {
 
