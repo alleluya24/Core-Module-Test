@@ -56,5 +56,5 @@ spring.minio.secret-key=minioadmin
 ```
 NB: The application does not create the bucket, you need to create the bucket manually in the minio UI.
 
-Swagger is available at http://localhost:8080/swagger-ui/index.htm
+Swagger is available at http://localhost:8080/swagger-ui/index.html
 
