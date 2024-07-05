@@ -8,15 +8,18 @@ import java.io.InputStream;
 import java.net.URLConnection;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import rw.eccellenza.core.objectstorage.exceptions.ObjectAlreadyExistsException;
 import rw.eccellenza.core.objectstorage.service.IObjectStorage;
 
 @Slf4j
@@ -223,5 +226,18 @@ public class ObjectStorageController {
       response.add(objectResponseDto);
     }
     return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @PostMapping(value = "/uploadFiles", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity<String> uploadMultipleFiles(
+      @RequestParam("attachments") MultipartFile[] attachments) {
+    try {
+      Path path = Path.of("/");
+      objectStorage.save(path, Arrays.stream(attachments).toList());
+      return new ResponseEntity<>("Successfully uploaded files ", HttpStatus.OK);
+    } catch (ObjectAlreadyExistsException e) {
+      return new ResponseEntity<>(
+          "Failed to upload the files, there is a file that already exists", HttpStatus.CONFLICT);
+    }
   }
 }

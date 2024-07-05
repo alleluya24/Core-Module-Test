@@ -3,9 +3,7 @@ package com.testing.core.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-/**
- * Object Response DTO
- */
+/** Object Response DTO */
 @Data
 @AllArgsConstructor
 public class ObjectResponseDto {

@@ -19,16 +19,13 @@ public class CompanyValidationController {
   private final ICompanyValidationService companyValidationService;
 
   @GetMapping("verify")
-  public ResponseEntity<CompanyResponseData> verifyId(
-      @RequestParam("id_number") String id) {
+  public ResponseEntity<CompanyResponseData> verifyId(@RequestParam("id_number") String id) {
     try {
       CompanyResponseData responseDataMono = companyValidationService.validateCompany(id).block();
-      return new ResponseEntity<>(
-              responseDataMono, org.springframework.http.HttpStatus.OK);
-    }
-    catch (CompanyValidationException e) {
-        log.error("Error validating company: ", e);
-        return ResponseEntity.status(404).build();
+      return new ResponseEntity<>(responseDataMono, org.springframework.http.HttpStatus.OK);
+    } catch (CompanyValidationException e) {
+      log.error("Error validating company: ", e);
+      return ResponseEntity.status(404).build();
     }
   }
 }
