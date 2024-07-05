@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-
 @SpringBootApplication()
 @EnableJpaRepositories(basePackages = {"rw.eccellenza"})
 @ComponentScan(
@@ -17,7 +16,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
       "rw.eccellenza.core.objectstorage",
       "rw.eccellenza.core.notification",
       "rw.eccellenza.core.utils",
-      "rw.eccellenza.core.blockChainIntegration", "rw.eccellenza.core.companyvalidation","rw.eccellenza.core.payment"
+      "rw.eccellenza.core.blockChainIntegration",
+      "rw.eccellenza.core.companyvalidation",
+      "rw.eccellenza.core.payment"
     })
 @EntityScan(basePackages = {"rw.eccellenza"})
 public class ModuleApplication {
