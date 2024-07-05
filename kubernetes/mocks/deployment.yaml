@@ -1,0 +1,408 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wiremock
+  namespace: shared
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wiremock
+  template:
+    metadata:
+      labels:
+        app: wiremock
+    spec:
+      containers:
+        - name: wiremock
+          image: wiremock/wiremock:2.27.2
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: wiremock-config
+              mountPath: /home/wiremock/mappings
+      volumes:
+        - name: wiremock-config
+          configMap:
+            name: wiremock-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wiremock-config
+  namespace: shared
+data:
+  mappings-1.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/api/response1"
+      },
+      "response": {
+        "status": 200,
+        "body": "Response for endpoint 1"
+      }
+    }
+  mappings-2.json: |
+    {
+      "request": {
+        "method": "POST",
+        "urlPath": "/mocks/api/Account/login",
+        "bodyPatterns": [
+          {
+            "equalToJson": "{\"username\": \"documa\",\"password\":\"documa\"}"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "username": "documa",
+          "token": "LCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5MjMwMjkyLCJqdGkiOiJjZmQzYjBiZWMwZDg0YzM2YjRkOGY4MzRiNWEzZmI3MyIsInVzZXJfaWQiOjE0fQ.od3FW3VeQu7wJmA_h94l0r_QPdhcKoCVU7n0fSWswi4"
+        }
+      }
+    }
+  mappings-3.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+        "queryParameters": {
+          "companyNum": {
+            "equalTo": "320A0232024"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "res": "ok",
+          "companyinfo": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "id": null,
+              "name": "TAVIMBA INVESTMENTS",
+              "companyNumber": "320A0232024",
+              "type": "(PRIVATE) LIMITED",
+              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "city": "Harare",
+              "telNumber": "+263784003616",
+              "mobileNumber": "+263784003616",
+              "email": "vimbainashekanjanda@gmail.com"
+            }
+          },
+          "directors": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "VIMBAINASHE RONALD",
+                "surname": "KANJANDA",
+                "id_no": "63-2125526-M-32 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "vimbainashekanjanda@gmail.com"
+              },
+              {
+                "names": "EDDINGTON",
+                "surname": "MSELERA",
+                "id_no": "63-1030195-K-63 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "emslera.tax@gmail.com"
+              }
+            ]
+          },
+          "shareholders": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "VIMBAINASHE RONALD",
+                "surname": "KANJANDA",
+                "id_no": "63-2125526-M-32 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "vimbainashekanjanda@gmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              },
+              {
+                "names": "EDDINGTON",
+                "surname": "MSELERA",
+                "id_no": "63-1030195-K-63 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "emslera.tax@gmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              }
+            ]
+          },
+          "seccretary": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "names": "VIMBAINASHE RONALD",
+              "surname": "KANJANDA",
+              "id_no": "63-2125526-M-32 ",
+              "address": "95 Borrowdale Road Borrowdale, Harare",
+              "email": "vimbainashekanjanda@gmail.com"
+            }
+          }
+        }
+      }
+    }
+  mappings-4.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/response3"
+      },
+      "response": {
+        "status": 404,
+        "body": "Not found"
+      }
+    }
+  mappings-5.json: |
+    {
+      "request": {
+        "method": "POST",
+        "urlPath": "/service/token/",
+        "bodyPatterns": [
+          {
+            "equalToJson": "{\"username\": \"documa\",\"password\":\"documa\"}"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "refresh": "documa",
+          "access": "LCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5MjMwMjkyLCJqdGkiOiJjZmQzYjBiZWMwZDg0YzM2YjRkOGY4MzRiNWEzZmI3MyIsInVzZXJfaWQiOjE0fQ.od3FW3VeQu7wJmA_h94l0r_QPdhcKoCVU7n0fSWswi4"
+        }
+      }
+    }
+  mappings-6.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "020225220I02"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "E",
+          "birthPlace": null,
+          "sex": null,
+          "surname": null,
+          "dateOfDeath": null,
+          "personNo": "020225220I02",
+          "firstName": null,
+          "dateOfBirth": null
+        }
+      }
+    }
+  mappings-7.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "020232556V02"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "E",
+          "birthPlace": null,
+          "sex": null,
+          "surname": null,
+          "dateOfDeath": null,
+          "personNo": "020232556V02",
+          "firstName": null,
+          "dateOfBirth": null
+        }
+      }
+    }
+  mappings-8.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "130099636J13"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "D",
+          "birthPlace": "CHIPINGE",
+          "sex": "F",
+          "surname": "MWANDIWONESA",
+          "dateOfDeath": "2014-10-19",
+          "personNo": "130099636J13",
+          "firstName": "SHEKAI",
+          "dateOfBirth": "1972-12-11"
+        }
+      }
+    }
+  mappings-9.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "130102717H13"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "D",
+          "birthPlace": "ZAMCHIYA VILLAGE CHIEF MSIKAVANHU",
+          "sex": "M",
+          "surname": "SITHOLE",
+          "dateOfDeath": "2020-08-10",
+          "personNo": "130102717H13",
+          "firstName": "KEEVEN",
+          "dateOfBirth": "1968-06-08"
+        }
+      }
+    }
+  mappings-10.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "0200828280M00"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "E",
+          "birthPlace": null,
+          "sex": null,
+          "surname": null,
+          "dateOfDeath": null,
+          "personNo": "0200828280M00",
+          "firstName": null,
+          "dateOfBirth": null
+        }
+      }
+    }
+  mappings-11.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "632002012H42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": "EDITH OPPERMAN MATERNITY CLINIC",
+          "sex": "F",
+          "surname": "CHASAISA",
+          "dateOfDeath": null,
+          "personNo": "632002012H42",
+          "firstName": "LIANDRA GLADYS ZVIKOMBORERO CHENAI",
+          "dateOfBirth": "1997-03-31"
+        }
+      }
+    }
+  mappings-12.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "631524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "CHIGWESHE",
+          "dateOfDeath": null,
+          "personNo": "631524168M42",
+          "firstName": "SANTANA",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }

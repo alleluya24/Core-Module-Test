@@ -8,15 +8,20 @@ import java.io.InputStream;
 import java.net.URLConnection;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import rw.eccellenza.core.objectstorage.exceptions.ObjectAlreadyExistsException;
 import rw.eccellenza.core.objectstorage.service.IObjectStorage;
 
 @Slf4j
@@ -37,7 +42,7 @@ public class ObjectStorageController {
       Path path = Path.of(Objects.requireNonNull(file.getOriginalFilename()));
       objectStorage.save(path, file.getInputStream());
       return new ResponseEntity<>(
-          "Successfully uploaded: " + file.getOriginalFilename(), HttpStatus.OK);
+              "Successfully uploaded: " + file.getOriginalFilename(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>("Failed to upload the file", HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -45,7 +50,7 @@ public class ObjectStorageController {
 
   @PostMapping("/uploadFileWithPath")
   public ResponseEntity<String> handleFileUploadWithPath(
-      @RequestParam("file") MultipartFile file, @RequestParam String filePath) {
+          @RequestParam("file") MultipartFile file, @RequestParam String filePath) {
     // Check if the file is not empty
     if (file.isEmpty()) {
       return new ResponseEntity<>("Please select a file to upload", HttpStatus.BAD_REQUEST);
@@ -54,7 +59,7 @@ public class ObjectStorageController {
       Path path = Path.of(filePath + Objects.requireNonNull(file.getOriginalFilename()));
       objectStorage.save(path, file.getInputStream());
       return new ResponseEntity<>(
-          "Successfully uploaded: " + file.getOriginalFilename(), HttpStatus.OK);
+              "Successfully uploaded: " + file.getOriginalFilename(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<>("Failed to upload the file", HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -68,14 +73,14 @@ public class ObjectStorageController {
    */
   @PostMapping("/uploadImage")
   public void uploadImage(
-      @RequestParam("source") String source, @RequestParam("base64Image") String base64Image) {
+          @RequestParam("source") String source, @RequestParam("base64Image") String base64Image) {
     Path path = Path.of(Objects.requireNonNull(source));
     objectStorage.uploadImage(base64Image, path);
   }
 
   @GetMapping("/getFile")
   public ResponseEntity<String> getObject(
-      @RequestParam("object") String object, HttpServletResponse response) throws IOException {
+          @RequestParam("object") String object, HttpServletResponse response) throws IOException {
     try {
       InputStream inputStream = objectStorage.getObject(Path.of(object));
 
@@ -126,7 +131,7 @@ public class ObjectStorageController {
    */
   @GetMapping("/urlWithSeconds")
   public String getPreSignedObjectUrlWithTimeInSeconds(
-      @RequestParam("fileName") String fileName, @RequestParam("time") Integer timeInSeconds) {
+          @RequestParam("fileName") String fileName, @RequestParam("time") Integer timeInSeconds) {
     Path path = Path.of(Objects.requireNonNull(fileName));
     return objectStorage.getPreSignedObjectUrl(path, timeInSeconds);
   }
@@ -167,11 +172,11 @@ public class ObjectStorageController {
 
   @GetMapping("/getObjectInChunks")
   public ResponseEntity<String> getObject(
-      @RequestParam("object") String object,
-      @RequestParam("offset") Long offset,
-      @RequestParam("length") Long length,
-      HttpServletResponse response)
-      throws IOException {
+          @RequestParam("object") String object,
+          @RequestParam("offset") Long offset,
+          @RequestParam("length") Long length,
+          HttpServletResponse response)
+          throws IOException {
     try {
       InputStream inputStream = objectStorage.getInputStream(Path.of(object), offset, length);
 
@@ -191,18 +196,18 @@ public class ObjectStorageController {
 
   @GetMapping("/listFiles/prefix")
   public ResponseEntity<List<ObjectResponseDto>> getFullListByPrefix(
-      @RequestParam("fileName") String fileName) {
+          @RequestParam("fileName") String fileName) {
     Path path = Path.of(Objects.requireNonNull(fileName));
     List<Item> results = objectStorage.getFullList(path);
     List<ObjectResponseDto> response = new ArrayList<>();
     // for each item in the results, print the object name
     for (Item item : results) {
       ObjectResponseDto objectResponseDto =
-          new ObjectResponseDto(
-              item.objectName(),
-              String.valueOf(item.size()),
-              item.isDir(),
-              item.isDir() ? "" : item.lastModified().toString());
+              new ObjectResponseDto(
+                      item.objectName(),
+                      String.valueOf(item.size()),
+                      item.isDir(),
+                      item.isDir() ? "" : item.lastModified().toString());
       response.add(objectResponseDto);
     }
     return new ResponseEntity<>(response, HttpStatus.OK);
@@ -215,13 +220,25 @@ public class ObjectStorageController {
     // for each item in the results, print the object name
     for (Item item : results) {
       ObjectResponseDto objectResponseDto =
-          new ObjectResponseDto(
-              item.objectName(),
-              String.valueOf(item.size()),
-              item.isDir(),
-              item.isDir() ? "" : item.lastModified().toString());
+              new ObjectResponseDto(
+                      item.objectName(),
+                      String.valueOf(item.size()),
+                      item.isDir(),
+                      item.isDir() ? "" : item.lastModified().toString());
       response.add(objectResponseDto);
     }
     return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @PostMapping(value = "/uploadFiles", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity<String> uploadMultipleFiles(@RequestParam("attachments") MultipartFile[] attachments) {
+    try {
+      Path path = Path.of("/");
+      objectStorage.save(path, Arrays.stream(attachments).toList());
+      return new ResponseEntity<>(
+              "Successfully uploaded files ", HttpStatus.OK);
+    } catch (ObjectAlreadyExistsException e) {
+      return new ResponseEntity<>("Failed to upload the files, there is a file that already exists", HttpStatus.CONFLICT);
+    }
   }
 }
