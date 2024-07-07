@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
+import rw.eccellenza.core.notification.domain.EmailRequest;
 import rw.eccellenza.core.notification.domain.EmailResponse;
 import rw.eccellenza.core.notification.domain.EmailUtil;
 import rw.eccellenza.core.notification.domain.MailList;
-import rw.eccellenza.core.notification.dtos.EmailRequestDto;
 import rw.eccellenza.core.notification.service.IEmailService;
 
 /**
@@ -32,7 +32,7 @@ public class NotificationController {
       path = "/email/send",
       consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   public ResponseEntity<Mono<EmailResponse>> sendEmail(
-      @RequestPart(name = "emailRequest", required = true) EmailRequestDto emailRequest,
+      @RequestPart(name = "emailRequest", required = true) EmailRequest emailRequest,
       @RequestPart("attachment") MultipartFile attachment) {
 
     try {
