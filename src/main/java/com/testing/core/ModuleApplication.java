@@ -18,7 +18,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
       "rw.eccellenza.core.utils",
       "rw.eccellenza.core.blockChainIntegration",
       "rw.eccellenza.core.companyvalidation",
-      "rw.eccellenza.core.payment"
+      "rw.eccellenza.core.payment",
+      "rw.eccellenza.core.notification.dtos"
     })
 @EntityScan(basePackages = {"rw.eccellenza"})
 public class ModuleApplication {
