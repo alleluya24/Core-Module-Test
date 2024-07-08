@@ -32,11 +32,9 @@ public class NotificationController {
   @PostMapping(path = "/email/send")
   public ResponseEntity<Mono<EmailResponse>> sendEmail(
       @RequestParam(name = "emailRequest", required = true) String emailRequestStr,
-      @RequestParam("attachment") MultipartFile attachment) {
+      @RequestParam(name = "attachment", required = false) MultipartFile attachment) {
 
     try {
-
-      log.info("Received file with content type: {}", attachment.getContentType());
 
       // Deserialize the JSON string to EmailRequest object
       EmailRequest emailRequest = objectMapper.readValue(emailRequestStr, EmailRequest.class);
@@ -48,10 +46,11 @@ public class NotificationController {
       emailUtil.setBodyText(emailRequest.getBodyText());
       emailUtil.setReceipient(emailRequest.getReceipient());
 
-      emailUtil.setContentType(attachment.getContentType());
-      emailUtil.setMyBytes(attachment.getBytes());
-      emailUtil.setFilename(attachment.getName());
-
+      if (attachment != null) {
+        emailUtil.setContentType(attachment.getContentType());
+        emailUtil.setMyBytes(attachment.getBytes());
+        emailUtil.setFilename(attachment.getName());
+      }
       emailUtils.add(emailUtil);
       mailList.setEmails(emailUtils);
 
