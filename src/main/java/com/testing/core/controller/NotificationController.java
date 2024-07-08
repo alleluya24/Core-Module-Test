@@ -28,7 +28,9 @@ public class NotificationController {
 
   @Autowired private IEmailService emailService;
 
-  @PostMapping(path = "/email/send")
+  @PostMapping(
+      path = "/email/send",
+      consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
   public ResponseEntity<Mono<EmailResponse>> sendEmail(
       @RequestPart(name = "emailRequest", required = true) EmailRequest emailRequest,
       @RequestPart("attachment") MultipartFile attachment) {
