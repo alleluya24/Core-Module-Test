@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,9 +27,7 @@ public class NotificationController {
 
   @Autowired private IEmailService emailService;
 
-  @PostMapping(
-      path = "/email/send",
-      consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+  @PostMapping(path = "/email/send")
   public ResponseEntity<Mono<EmailResponse>> sendEmail(
       @RequestPart(name = "emailRequest", required = true) EmailRequest emailRequest,
       @RequestPart("attachment") MultipartFile attachment) {
