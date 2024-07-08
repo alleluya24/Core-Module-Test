@@ -1,14 +1,14 @@
 package com.testing.core.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
@@ -27,17 +27,19 @@ import rw.eccellenza.core.notification.service.IEmailService;
 public class NotificationController {
 
   @Autowired private IEmailService emailService;
+  @Autowired private ObjectMapper objectMapper;
 
-  @PostMapping(
-      path = "/email/send",
-      consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+  @PostMapping(path = "/email/send")
   public ResponseEntity<Mono<EmailResponse>> sendEmail(
-      @RequestPart(name = "emailRequest", required = true) EmailRequest emailRequest,
-      @RequestPart("attachment") MultipartFile attachment) {
+      @RequestParam(name = "emailRequest", required = true) String emailRequestStr,
+      @RequestParam("attachment") MultipartFile attachment) {
 
     try {
 
       log.info("Received file with content type: {}", attachment.getContentType());
+
+      // Deserialize the JSON string to EmailRequest object
+      EmailRequest emailRequest = objectMapper.readValue(emailRequestStr, EmailRequest.class);
 
       MailList mailList = new MailList();
       EmailUtil emailUtil = new EmailUtil();
