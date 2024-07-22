@@ -36,7 +36,7 @@ data:
     {
       "request": {
         "method": "GET",
-        "urlPath": "/api/response1"
+        "urlPath": "/mocks/api/response1"
       },
       "response": {
         "status": 200,
@@ -178,7 +178,7 @@ data:
     {
       "request": {
         "method": "POST",
-        "urlPath": "/service/token/",
+        "urlPath": "/mocks/service/token/",
         "bodyPatterns": [
           {
             "equalToJson": "{\"username\": \"documa\",\"password\":\"documa\"}"
@@ -402,6 +402,156 @@ data:
           "dateOfDeath": null,
           "personNo": "631524168M42",
           "firstName": "SANTANA",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-13.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "632524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST2",
+          "dateOfDeath": null,
+          "personNo": "632524168M42",
+          "firstName": "TEST1",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-14.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "633524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST2",
+          "dateOfDeath": null,
+          "personNo": "633524168M42",
+          "firstName": "TEST2",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-15.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "634524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST3",
+          "dateOfDeath": null,
+          "personNo": "634524168M42",
+          "firstName": "TEST3",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-16.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "635524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST4",
+          "dateOfDeath": null,
+          "personNo": "635524168M42",
+          "firstName": "TEST4",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-17.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "636524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST5",
+          "dateOfDeath": null,
+          "personNo": "636524168M42",
+          "firstName": "TEST5",
           "dateOfBirth": "1992-06-03"
         }
       }
