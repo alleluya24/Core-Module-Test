@@ -1,5 +1,6 @@
 package com.testing.core.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 import rw.eccellenza.core.notification.domain.EmailResponse;
 import rw.eccellenza.core.notification.domain.MailList;
-import rw.eccellenza.core.notification.dtos.SmsRequestDto;
-import rw.eccellenza.core.notification.dtos.SmsResponseDto;
 import rw.eccellenza.core.notification.service.IEmailService;
-import rw.eccellenza.core.notification.service.ISmsNotificationService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author -- Richard Mazimpaka
@@ -25,13 +27,35 @@ import rw.eccellenza.core.notification.service.ISmsNotificationService;
 public class NotificationController {
 
   @Autowired private IEmailService emailService;
+  @Autowired private ObjectMapper objectMapper;
   @Autowired private ISmsNotificationService smsNotificationService;
 
-  @PostMapping("/email/send")
+  @PostMapping(path = "/email/send")
   public ResponseEntity<Mono<EmailResponse>> sendEmail(
-      @RequestBody(required = true) MailList mailList) {
+      @RequestParam(name = "emailRequest", required = true) String emailRequestStr,
+      @RequestParam("attachment") MultipartFile attachment) {
 
     try {
+
+      log.info("Received file with content type: {}", attachment.getContentType());
+
+      // Deserialize the JSON string to EmailRequest object
+      EmailRequest emailRequest = objectMapper.readValue(emailRequestStr, EmailRequest.class);
+
+      MailList mailList = new MailList();
+      EmailUtil emailUtil = new EmailUtil();
+      List<EmailUtil> emailUtils = new ArrayList<>();
+      emailUtil.setSubject(emailRequest.getSubject());
+      emailUtil.setBodyText(emailRequest.getBodyText());
+      emailUtil.setReceipient(emailRequest.getReceipient());
+
+      emailUtil.setContentType(attachment.getContentType());
+      emailUtil.setMyBytes(attachment.getBytes());
+      emailUtil.setFilename(attachment.getName());
+
+      emailUtils.add(emailUtil);
+      mailList.setEmails(emailUtils);
+
       log.info("Initiating email sending process for: {}", mailList);
 
       Mono<EmailResponse> responseMono =

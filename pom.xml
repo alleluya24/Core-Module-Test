@@ -31,7 +31,12 @@
 		<dependency>
 			<groupId>zw.eccellenza</groupId>
 			<artifactId>core-module</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>3.3.2</version>
 		</dependency>
 
 		<dependency>
