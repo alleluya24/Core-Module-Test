@@ -31,7 +31,7 @@
 		<dependency>
 			<groupId>zw.eccellenza</groupId>
 			<artifactId>core-module</artifactId>
-			<version>1.0.2</version>
+			<version>1.0.6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
@@ -47,7 +47,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.28</version>
+			<version>1.18.30</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
