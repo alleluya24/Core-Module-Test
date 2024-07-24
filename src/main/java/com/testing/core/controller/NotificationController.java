@@ -1,22 +1,24 @@
 package com.testing.core.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
+import rw.eccellenza.core.notification.domain.EmailRequest;
 import rw.eccellenza.core.notification.domain.EmailResponse;
+import rw.eccellenza.core.notification.domain.EmailUtil;
 import rw.eccellenza.core.notification.domain.MailList;
+import rw.eccellenza.core.notification.dtos.SmsResponseDto;
 import rw.eccellenza.core.notification.service.IEmailService;
-
-import java.util.ArrayList;
-import java.util.List;
+import rw.eccellenza.core.notification.service.ISmsNotificationService;
 
 /**
  * @Author -- Richard Mazimpaka
@@ -80,24 +82,25 @@ public class NotificationController {
     }
   }
 
-
-@PostMapping("sms/send")
+  @PostMapping("sms/send")
   public ResponseEntity<Mono<SmsResponseDto>> sendSms(
-          @RequestParam("phoneNumber") String  phoneNumber,@RequestParam("message") String message) {
+      @RequestParam("phoneNumber") String phoneNumber, @RequestParam("message") String message) {
 
     try {
       log.info("Initiating Sms sending process for: {}", phoneNumber);
 
       Mono<SmsResponseDto> responseMono =
-              smsNotificationService
-                      .sendSms(message,phoneNumber)
-                      .map(
-                              response -> {
-                                log.info("SMS sent successfully with status: {}", response.getMessages().get(0).getStatus().getName());
-                                return response;
-                              })
-                      .doOnError(error -> log.error("Error sending sms: {}", error.getMessage()))
-                      .doOnSuccess(success -> log.info("SMS sending completed"));
+          smsNotificationService
+              .sendSms(message, phoneNumber)
+              .map(
+                  response -> {
+                    log.info(
+                        "SMS sent successfully with status: {}",
+                        response.getMessages().get(0).getStatus().getName());
+                    return response;
+                  })
+              .doOnError(error -> log.error("Error sending sms: {}", error.getMessage()))
+              .doOnSuccess(success -> log.info("SMS sending completed"));
 
       return ResponseEntity.ok(responseMono);
 
