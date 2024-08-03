@@ -139,7 +139,7 @@ public class NotificationController {
 
         AttachmentDto attachmentDto = new AttachmentDto();
         attachmentDto.setContentType(f.getContentType());
-        attachmentDto.setFilename(f.getName());
+        attachmentDto.setFilename(f.getOriginalFilename());
         attachmentDto.setTheAttachmentBytes(f.getBytes());
 
         attachmentDtos.add(attachmentDto);
