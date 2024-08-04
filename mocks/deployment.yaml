@@ -21,6 +21,8 @@ spec:
           volumeMounts:
             - name: wiremock-config
               mountPath: /home/wiremock/mappings
+          command: ["/bin/sh", "-c"]
+          args: ["java -cp /var/wiremock/extensions/*:/var/wiremock/lib/* com.github.tomakehurst.wiremock.standalone.WireMockServerRunner --local-response-templating --port 8080"]
       volumes:
         - name: wiremock-config
           configMap:
@@ -36,7 +38,7 @@ data:
     {
       "request": {
         "method": "GET",
-        "urlPath": "/api/response1"
+        "urlPath": "/mocks/api/response1"
       },
       "response": {
         "status": 200,
@@ -65,104 +67,6 @@ data:
         }
       }
     }
-  mappings-3.json: |
-    {
-      "request": {
-        "method": "GET",
-        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
-        "queryParameters": {
-          "companyNum": {
-            "equalTo": "320A0232024"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "jsonBody": {
-          "res": "ok",
-          "companyinfo": {
-            "contentType": null,
-            "serializerSettings": null,
-            "statusCode": null,
-            "value": {
-              "id": null,
-              "name": "TAVIMBA INVESTMENTS",
-              "companyNumber": "320A0232024",
-              "type": "(PRIVATE) LIMITED",
-              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
-              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
-              "city": "Harare",
-              "telNumber": "+263784003616",
-              "mobileNumber": "+263784003616",
-              "email": "vimbainashekanjanda@gmail.com"
-            }
-          },
-          "directors": {
-            "contentType": null,
-            "serializerSettings": null,
-            "statusCode": null,
-            "value": [
-              {
-                "names": "VIMBAINASHE RONALD",
-                "surname": "KANJANDA",
-                "id_no": "63-2125526-M-32 ",
-                "address": "95 Borrowdale Road Borrowdale, Harare",
-                "email": "vimbainashekanjanda@gmail.com"
-              },
-              {
-                "names": "EDDINGTON",
-                "surname": "MSELERA",
-                "id_no": "63-1030195-K-63 ",
-                "address": "95 Borrowdale Road Borrowdale, Harare",
-                "email": "emslera.tax@gmail.com"
-              }
-            ]
-          },
-          "shareholders": {
-            "contentType": null,
-            "serializerSettings": null,
-            "statusCode": null,
-            "value": [
-              {
-                "names": "VIMBAINASHE RONALD",
-                "surname": "KANJANDA",
-                "id_no": "63-2125526-M-32 ",
-                "address": "95 Borrowdale Road Borrowdale, Harare",
-                "email": "vimbainashekanjanda@gmail.com",
-                "shareType": null,
-                "ordinaryshares": 50,
-                "prefereceShares": 0
-              },
-              {
-                "names": "EDDINGTON",
-                "surname": "MSELERA",
-                "id_no": "63-1030195-K-63 ",
-                "address": "95 Borrowdale Road Borrowdale, Harare",
-                "email": "emslera.tax@gmail.com",
-                "shareType": null,
-                "ordinaryshares": 50,
-                "prefereceShares": 0
-              }
-            ]
-          },
-          "seccretary": {
-            "contentType": null,
-            "serializerSettings": null,
-            "statusCode": null,
-            "value": {
-              "names": "VIMBAINASHE RONALD",
-              "surname": "KANJANDA",
-              "id_no": "63-2125526-M-32 ",
-              "address": "95 Borrowdale Road Borrowdale, Harare",
-              "email": "vimbainashekanjanda@gmail.com"
-            }
-          }
-        }
-      }
-    }
   mappings-4.json: |
     {
       "request": {
@@ -178,7 +82,7 @@ data:
     {
       "request": {
         "method": "POST",
-        "urlPath": "/service/token/",
+        "urlPath": "/mocks/service/token/",
         "bodyPatterns": [
           {
             "equalToJson": "{\"username\": \"documa\",\"password\":\"documa\"}"
@@ -405,4 +309,1346 @@ data:
           "dateOfBirth": "1992-06-03"
         }
       }
+    }
+  mappings-13.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "632524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST2",
+          "dateOfDeath": null,
+          "personNo": "632524168M42",
+          "firstName": "TEST1",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-14.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "633524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST2",
+          "dateOfDeath": null,
+          "personNo": "633524168M42",
+          "firstName": "TEST2",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-15.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "634524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST3",
+          "dateOfDeath": null,
+          "personNo": "634524168M42",
+          "firstName": "TEST3",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-16.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "635524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST4",
+          "dateOfDeath": null,
+          "personNo": "635524168M42",
+          "firstName": "TEST4",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-17.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "636524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST5",
+          "dateOfDeath": null,
+          "personNo": "636524168M42",
+          "firstName": "TEST5",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-18.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+        "queryParameters": {
+          "companyNum": {
+            "equalTo": "420A0232024"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "res": "ok",
+          "companyinfo": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "id": null,
+              "name": "MOCKED INVESTMENTS",
+              "companyNumber": "420A0232024",
+              "type": "(PRIVATE) LIMITED",
+              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "city": "Harare",
+              "telNumber": "250780979226",
+              "mobileNumber": "250780979226",
+              "email": "prollautoittuxa-4939@yopmail.com"
+            }
+          },
+          "directors": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "VIMBAINASHE RONALD",
+                "surname": "KANJANDA",
+                "id_no": "63-2125526-M-32 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "prollautoittuxa-4939@yopmail.com"
+              },
+              {
+                "names": "EDDINGTON",
+                "surname": "MSELERA",
+                "id_no": "63-1030195-K-63 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "kiquayodotro-9544@yopmail.com"
+              }
+            ]
+          },
+          "shareholders": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "VIMBAINASHE RONALD",
+                "surname": "KANJANDA",
+                "id_no": "63-2125526-M-32 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "robaumocilo-8843@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              },
+              {
+                "names": "EDDINGTON",
+                "surname": "MSELERA",
+                "id_no": "63-1030195-K-63 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "daffoivureippa-2454@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              }
+            ]
+          },
+          "seccretary": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "names": "VIMBAINASHE RONALD",
+              "surname": "KANJANDA",
+              "id_no": "63-2125526-M-32 ",
+              "address": "95 Borrowdale Road Borrowdale, Harare",
+              "email": "sacroifouxala-6686@yopmail.com"
+            }
+          }
+        }
+      }
+    }
+  mappings-19.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+        "queryParameters": {
+          "companyNum": {
+            "equalTo": "520A0232024"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "res": "ok",
+          "companyinfo": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "id": null,
+              "name": "MOCKED INVESTMENTS",
+              "companyNumber": "520A0232024",
+              "type": "(PRIVATE) LIMITED",
+              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "city": "Harare",
+              "telNumber": "250780979226",
+              "mobileNumber": "250780979226",
+              "email": "trezeuffeiyaju-6507@yopmail.com"
+            }
+          },
+          "directors": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "VIMBAINASHE RONALD",
+                "surname": "KANJANDA",
+                "id_no": "63-2125526-M-32 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "sebugrattiffi-4000@yopmail.com"
+              },
+              {
+                "names": "EDDINGTON",
+                "surname": "MSELERA",
+                "id_no": "63-1030195-K-63 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "guffufraveihi-6761@yopmail.com"
+              }
+            ]
+          },
+          "shareholders": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "VIMBAINASHE RONALD",
+                "surname": "KANJANDA",
+                "id_no": "63-2125526-M-32 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "coufreffopalloi-2616@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              },
+              {
+                "names": "EDDINGTON",
+                "surname": "MSELERA",
+                "id_no": "63-1030195-K-63 ",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "tujeinnoquotrei-5192@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              }
+            ]
+          },
+          "seccretary": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "names": "VIMBAINASHE RONALD",
+              "surname": "KANJANDA",
+              "id_no": "63-2125526-M-32 ",
+              "address": "95 Borrowdale Road Borrowdale, Harare",
+              "email": "gouhufrallode-7273@yopmail.com"
+            }
+          }
+        }
+      }
+    }
+  mappings-20.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "637524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST7",
+          "dateOfDeath": null,
+          "personNo": "637524168M42",
+          "firstName": "TEST7",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-21.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "638524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST8",
+          "dateOfDeath": null,
+          "personNo": "638524168M42",
+          "firstName": "TEST8",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-22.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "639524168M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST9",
+          "dateOfDeath": null,
+          "personNo": "639524168M42",
+          "firstName": "TEST9",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-23.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+        "queryParameters": {
+          "companyNum": {
+            "equalTo": "320A0232024"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "res": "ok",
+          "companyinfo": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "id": null,
+              "name": "MOCKED INVESTMENTS",
+              "companyNumber": "320A0232024",
+              "type": "(PRIVATE) LIMITED",
+              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "city": "Harare",
+              "telNumber": "250780979226",
+              "mobileNumber": "2507809792260",
+              "email": "trezeuffeiyaju-6507@yopmail.com"
+            }
+          },
+          "directors": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "SANTANA CHIGWESHE",
+                "surname": "CHIGWESHE",
+                "id_no": "631524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "vilavaupife-5295@yopmail.com"
+              },
+              {
+                "names": "TEST3",
+                "surname": "TEST3",
+                "id_no": "634524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "treiroitteiliquei-6075@yopmail.com"
+              }
+            ]
+          },
+          "shareholders": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "TEST4 TEST4",
+                "surname": "TEST4",
+                "id_no": "635524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "reurosaufedu-4430@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              },
+              {
+                "names": "TEST5",
+                "surname": "TEST5",
+                "id_no": "636524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "kibrezimmappu-4230@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              }
+            ]
+          },
+          "seccretary": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "names": "TEST7 TEST7",
+              "surname": "TEST7",
+              "id_no": "637524168M42",
+              "address": "95 Borrowdale Road Borrowdale, Harare",
+              "email": "meuxeiloppega-3121@yopmail.com"
+            }
+          }
+        }
+      }
+    }
+  mappings-24.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+        "queryParameters": {
+          "companyNum": {
+            "equalTo": "320A0332024"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "res": "ok",
+          "companyinfo": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "id": null,
+              "name": "MOCKED INVESTMENTS 1",
+              "companyNumber": "320A0332024",
+              "type": "(PRIVATE) LIMITED",
+              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "city": "Harare",
+              "telNumber": "250780979226",
+              "mobileNumber": "250780979226",
+              "email": "greiyussipocru-3786@yopmail.com"
+            }
+          },
+          "directors": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "SANTANA CHIGWESHE",
+                "surname": "CHIGWESHE",
+                "id_no": "631524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "greiyussipocru-3786@yopmail.com"
+              },
+              {
+                "names": "TEST3",
+                "surname": "TEST3",
+                "id_no": "634524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "greiyussipocru-3786@yopmail.com"
+              }
+            ]
+          },
+          "shareholders": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "TEST4 TEST4",
+                "surname": "TEST4",
+                "id_no": "635524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "greiyussipocru-3786@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              },
+              {
+                "names": "TEST5",
+                "surname": "TEST5",
+                "id_no": "636524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "greiyussipocru-3786@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              }
+            ]
+          },
+          "seccretary": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "names": "TEST7 TEST7",
+              "surname": "TEST7",
+              "id_no": "637524168M42",
+              "address": "95 Borrowdale Road Borrowdale, Harare",
+              "email": "greiyussipocru-3786@yopmail.com"
+            }
+          }
+        }
+      }
+    }
+  mappings-25.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+        "queryParameters": {
+          "companyNum": {
+            "equalTo": "320A0432024"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "res": "ok",
+          "companyinfo": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "id": null,
+              "name": "MOCKED INVESTMENTS 2",
+              "companyNumber": "320A0432024",
+              "type": "(PRIVATE) LIMITED",
+              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "city": "Harare",
+              "telNumber": "250780979226",
+              "mobileNumber": "250780979226",
+              "email": "deicezoissoizo-4209@yopmail.com"
+            }
+          },
+          "directors": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "SANTANA CHIGWESHE",
+                "surname": "CHIGWESHE",
+                "id_no": "631524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "deicezoissoizo-4209@yopmail.com"
+              },
+              {
+                "names": "TEST3",
+                "surname": "TEST3",
+                "id_no": "634524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "deicezoissoizo-4209@yopmail.com"
+              }
+            ]
+          },
+          "shareholders": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "TEST4 TEST4",
+                "surname": "TEST4",
+                "id_no": "635524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "deicezoissoizo-4209@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              },
+              {
+                "names": "TEST5",
+                "surname": "TEST5",
+                "id_no": "636524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "deicezoissoizo-4209@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              }
+            ]
+          },
+          "seccretary": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "names": "TEST7 TEST7",
+              "surname": "TEST7",
+              "id_no": "637524168M42",
+              "address": "95 Borrowdale Road Borrowdale, Harare",
+              "email": "deicezoissoizo-4209@yopmail.com"
+            }
+          }
+        }
+      }
+    }
+  mappings-26.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+        "queryParameters": {
+          "companyNum": {
+            "equalTo": "320A0532024"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "res": "ok",
+          "companyinfo": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "id": null,
+              "name": "MOCKED INVESTMENTS 3",
+              "companyNumber": "320A0532024",
+              "type": "(PRIVATE) LIMITED",
+              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "city": "Harare",
+              "telNumber": "250780979226",
+              "mobileNumber": "250780979226",
+              "email": "boiffauzassebeu-9358@yopmail.com"
+            }
+          },
+          "directors": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "SANTANA CHIGWESHE",
+                "surname": "CHIGWESHE",
+                "id_no": "631524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "boiffauzassebeu-9358@yopmail.com"
+              },
+              {
+                "names": "TEST3",
+                "surname": "TEST3",
+                "id_no": "634524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "boiffauzassebeu-9358@yopmail.com"
+              }
+            ]
+          },
+          "shareholders": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "TEST4 TEST4",
+                "surname": "TEST4",
+                "id_no": "635524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "boiffauzassebeu-9358@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              },
+              {
+                "names": "TEST5",
+                "surname": "TEST5",
+                "id_no": "636524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "boiffauzassebeu-9358@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              }
+            ]
+          },
+          "seccretary": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "names": "TEST7 TEST7",
+              "surname": "TEST7",
+              "id_no": "637524168M42",
+              "address": "95 Borrowdale Road Borrowdale, Harare",
+              "email": "boiffauzassebeu-9358@yopmail.com"
+            }
+          }
+        }
+      }
+    }
+  mappings-27.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "639524161M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST9",
+          "dateOfDeath": null,
+          "personNo": "639524161M42",
+          "firstName": "TEST9",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-29.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "639524162M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST9",
+          "dateOfDeath": null,
+          "personNo": "639524162M42",
+          "firstName": "TEST9",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-30.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "639524163M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST9",
+          "dateOfDeath": null,
+          "personNo": "639524163M42",
+          "firstName": "TEST9",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-31.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "639524164M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST9",
+          "dateOfDeath": null,
+          "personNo": "639524164M42",
+          "firstName": "TEST9",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-32.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "639524165M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST9",
+          "dateOfDeath": null,
+          "personNo": "639524165M42",
+          "firstName": "TEST9",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-33.json: |-
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "639524166M42"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "A",
+          "birthPlace": null,
+          "sex": "F",
+          "surname": "TEST9",
+          "dateOfDeath": null,
+          "personNo": "639524166M42",
+          "firstName": "TEST9",
+          "dateOfBirth": "1992-06-03"
+        }
+      }
+    }
+  mappings-34.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+        "queryParameters": {
+          "companyNum": {
+            "equalTo": "320A0532025"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "res": "ok",
+          "companyinfo": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "id": null,
+              "name": "MOCKED INVESTMENTS 10",
+              "companyNumber": "320A0532025",
+              "type": "(PRIVATE) LIMITED",
+              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "city": "Harare",
+              "telNumber": "250780979226",
+              "mobileNumber": "250780979226",
+              "email": "wugrennafoupou-2814@yopmail.com"
+            }
+          },
+          "directors": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "SANTANA CHIGWESHE",
+                "surname": "CHIGWESHE",
+                "id_no": "631524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "wugrennafoupou-2814@yopmail.com"
+              },
+              {
+                "names": "TEST3",
+                "surname": "TEST3",
+                "id_no": "634524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "wugrennafoupou-2814@yopmail.com"
+              }
+            ]
+          },
+          "shareholders": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "TEST4 TEST4",
+                "surname": "TEST4",
+                "id_no": "635524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "wugrennafoupou-2814@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              },
+              {
+                "names": "TEST5",
+                "surname": "TEST5",
+                "id_no": "636524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "wugrennafoupou-2814@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              }
+            ]
+          },
+          "seccretary": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "names": "TEST7 TEST7",
+              "surname": "TEST7",
+              "id_no": "637524168M42",
+              "address": "95 Borrowdale Road Borrowdale, Harare",
+              "email": "wugrennafoupou-2814@yopmail.com"
+            }
+          }
+        }
+      }
+    }
+  mappings-35.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+        "queryParameters": {
+          "companyNum": {
+            "equalTo": "320A0532026"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "res": "ok",
+          "companyinfo": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "id": null,
+              "name": "MOCKED INVESTMENTS 11",
+              "companyNumber": "320A0532026",
+              "type": "(PRIVATE) LIMITED",
+              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "city": "Harare",
+              "telNumber": "250780979226",
+              "mobileNumber": "250780979226",
+              "email": "preuboukeutore-6567@yopmail.com"
+            }
+          },
+          "directors": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "SANTANA CHIGWESHE",
+                "surname": "CHIGWESHE",
+                "id_no": "631524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "preuboukeutore-6567@yopmail.com"
+              },
+              {
+                "names": "TEST3",
+                "surname": "TEST3",
+                "id_no": "634524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "preuboukeutore-6567@yopmail.com"
+              }
+            ]
+          },
+          "shareholders": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "TEST4 TEST4",
+                "surname": "TEST4",
+                "id_no": "635524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "preuboukeutore-6567@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              },
+              {
+                "names": "TEST5",
+                "surname": "TEST5",
+                "id_no": "636524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "preuboukeutore-6567@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              }
+            ]
+          },
+          "seccretary": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "names": "TEST7 TEST7",
+              "surname": "TEST7",
+              "id_no": "637524168M42",
+              "address": "95 Borrowdale Road Borrowdale, Harare",
+              "email": "preuboukeutore-6567@yopmail.com"
+            }
+          }
+        }
+      }
+    }
+  mappings-36.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+        "queryParameters": {
+          "companyNum": {
+            "equalTo": "320A0532027"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "res": "ok",
+          "companyinfo": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "id": null,
+              "name": "MOCKED INVESTMENTS 11",
+              "companyNumber": "320A0532027",
+              "type": "(PRIVATE) LIMITED",
+              "physicalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "postalAddress": "95 Borrowdale Road, Borrowdale, Harare",
+              "city": "Harare",
+              "telNumber": "250780979226",
+              "mobileNumber": "250780979226",
+              "email": "caugeiqueicafe-9489@yopmail.com"
+            }
+          },
+          "directors": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "SANTANA CHIGWESHE",
+                "surname": "CHIGWESHE",
+                "id_no": "631524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "caugeiqueicafe-9489@yopmail.com"
+              },
+              {
+                "names": "TEST3",
+                "surname": "TEST3",
+                "id_no": "634524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "caugeiqueicafe-9489@yopmail.com"
+              }
+            ]
+          },
+          "shareholders": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": [
+              {
+                "names": "TEST4 TEST4",
+                "surname": "TEST4",
+                "id_no": "635524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "caugeiqueicafe-9489@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              },
+              {
+                "names": "TEST5",
+                "surname": "TEST5",
+                "id_no": "636524168M42",
+                "address": "95 Borrowdale Road Borrowdale, Harare",
+                "email": "caugeiqueicafe-9489@yopmail.com",
+                "shareType": null,
+                "ordinaryshares": 50,
+                "prefereceShares": 0
+              }
+            ]
+          },
+          "seccretary": {
+            "contentType": null,
+            "serializerSettings": null,
+            "statusCode": null,
+            "value": {
+              "names": "TEST7 TEST7",
+              "surname": "TEST7",
+              "id_no": "637524168M42",
+              "address": "95 Borrowdale Road Borrowdale, Harare",
+              "email": "preuboukeutore-6567@yopmail.com"
+            }
+          }
+        }
+      }
+    }
+  mappings-37.json: |-
+    {
+    "request": {
+      "method": "GET",
+      "urlPath": "/mocks/service/person",
+      "queryParameters": {
+        "id_number": {
+          "matches": ".*"
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": "{\n  \"source\": null,\n  \"lastRefreshedTime\": \"{{now format='yyyy-MM-dd'}}\",\n  \"status\": \"A\",\n  \"birthPlace\": null,\n  \"sex\": \"F\",\n  \"surname\": \"TEST\",\n  \"dateOfDeath\": null,\n  \"personNo\": \"{{request.query.id_number}}\",\n  \"firstName\": \"TEST\",\n  \"dateOfBirth\": \"1992-06-03\"\n}",
+      "transformers": ["response-template"]
+    }
+    }
+  mappings-38.json: |
+    {
+    "request": {
+      "method": "GET",
+      "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+      "queryParameters": {
+        "companyNum": {
+          "matches": ".*"
+        }
+      }
+    },
+    "response": {
+      "status": 200,
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": "{\n  \"res\": \"ok\",\n  \"companyinfo\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": {\n      \"id\": null,\n      \"name\": \"MOCKED INVESTMENTS {{request.query.companyNum}}\",\n      \"companyNumber\": \"{{request.query.companyNum}}\",\n      \"type\": \"(PRIVATE) LIMITED\",\n      \"physicalAddress\": \"95 Borrowdale Road, Borrowdale, Harare\",\n      \"postalAddress\": \"95 Borrowdale Road, Borrowdale, Harare\",\n      \"city\": \"Harare\",\n      \"telNumber\": \"250780979226\",\n      \"mobileNumber\": \"250780979226\",\n      \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n    }\n  },\n  \"directors\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": [\n      {\n        \"names\": \"SANTANA CHIGWESHE\",\n        \"surname\": \"CHIGWESHE\",\n        \"id_no\": \"631524168M42\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n      },\n      {\n        \"names\": \"TEST3\",\n        \"surname\": \"TEST3\",\n        \"id_no\": \"634524168M42\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n      }\n    ]\n  },\n  \"shareholders\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": [\n      {\n        \"names\": \"TEST4 TEST4\",\n        \"surname\": \"TEST4\",\n        \"id_no\": \"635524168M42\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\",\n        \"shareType\": null,\n        \"ordinaryshares\": 50,\n        \"prefereceShares\": 0\n      },\n      {\n        \"names\": \"TEST5\",\n        \"surname\": \"TEST5\",\n        \"id_no\": \"636524168M42\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\",\n        \"shareType\": null,\n        \"ordinaryshares\": 50,\n        \"prefereceShares\": 0\n      }\n    ]\n  },\n  \"seccretary\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": {\n      \"names\": \"TEST7 TEST7\",\n      \"surname\": \"TEST7\",\n      \"id_no\": \"637524168M42\",\n      \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n      \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n    }\n  }\n}",
+      "transformers": ["response-template"]
+    }
     }
