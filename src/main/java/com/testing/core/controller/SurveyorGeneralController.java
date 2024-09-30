@@ -62,8 +62,7 @@ public class SurveyorGeneralController {
       @PathVariable("searchKey") String searchKey) {
     try {
       return new ResponseEntity<>(
-          surveyGeneralIntegrationService.searchProperty(searchKey).block(),
-          HttpStatus.OK);
+          surveyGeneralIntegrationService.searchProperty(searchKey).block(), HttpStatus.OK);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
