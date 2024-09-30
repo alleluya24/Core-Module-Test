@@ -57,14 +57,12 @@ public class SurveyorGeneralController {
     }
   }
 
-  @GetMapping("/seach-property/{districtId}/{townshipId}/{searchKey}")
+  @GetMapping("/seach-property/{searchKey}")
   public ResponseEntity<PropertyResponse> searchProperty(
-      @PathVariable("districtId") String districtId,
-      @PathVariable("townshipId") String townshipId,
       @PathVariable("searchKey") String searchKey) {
     try {
       return new ResponseEntity<>(
-          surveyGeneralIntegrationService.searchProperty(districtId, townshipId, searchKey).block(),
+          surveyGeneralIntegrationService.searchProperty(searchKey).block(),
           HttpStatus.OK);
     } catch (Exception e) {
       log.error(e.getMessage(), e);
