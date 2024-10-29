@@ -100,6 +100,28 @@ data:
         }
       }
     }
+  mappings-50.json: |
+    {
+      "request": {
+        "method": "POST",
+        "urlPath": "/mocks/service/token",
+        "bodyPatterns": [
+          {
+            "equalToJson": "{\"username\": \"documa\",\"password\":\"documa\"}"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "refresh": "documa",
+          "access": "LCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5MjMwMjkyLCJqdGkiOiJjZmQzYjBiZWMwZDg0YzM2YjRkOGY4MzRiNWEzZmI3MyIsInVzZXJfaWQiOjE0fQ.od3FW3VeQu7wJmA_h94l0r_QPdhcKoCVU7n0fSWswi4"
+        }
+      }
+    }
   mappings-6.json: |
     {
       "request": {
@@ -187,6 +209,126 @@ data:
           "personNo": "130099636J13",
           "firstName": "SHEKAI",
           "dateOfBirth": "1972-12-11"
+        }
+      }
+    }
+  mappings-08.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "131099636J13"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-01-02",
+          "status": "D",
+          "birthPlace": "CHIPINGE",
+          "sex": "M",
+          "surname": "LEGEND",
+          "dateOfDeath": "2014-10-19",
+          "personNo": "131099636J13",
+          "firstName": "JOHNY",
+          "dateOfBirth": "1979-11-21"
+        }
+      }
+    }
+  mappings-008.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "132099636J13"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-03-05",
+          "status": "D",
+          "birthPlace": "CHIPINGE",
+          "sex": "M",
+          "surname": "NADAL",
+          "dateOfDeath": "2018-10-19",
+          "personNo": "132099636J13",
+          "firstName": "RAFAEL",
+          "dateOfBirth": "1971-10-12"
+        }
+      }
+    }
+  mappings-0008.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "133099636J13"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2021-02-01",
+          "status": "D",
+          "birthPlace": "CHIPINGE",
+          "sex": "F",
+          "surname": "JOLIE",
+          "dateOfDeath": "2013-10-19",
+          "personNo": "133099636J13",
+          "firstName": "ANGELINA",
+          "dateOfBirth": "1952-11-19"
+        }
+      }
+    }
+  mappings-00008.json: |
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/mocks/service/person",
+        "queryParameters": {
+          "id_number": {
+            "equalTo": "134099636J13"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "source": null,
+          "lastRefreshedTime": "2024-07-05",
+          "status": "D",
+          "birthPlace": "CHIPINGE",
+          "sex": "F",
+          "surname": "JORDAN",
+          "dateOfDeath": "2014-10-19",
+          "personNo": "134099636J13",
+          "firstName": "MICHEAL",
+          "dateOfBirth": "1952-02-11"
         }
       }
     }
@@ -1628,7 +1770,7 @@ data:
       "headers": {
         "Content-Type": "application/json"
       },
-      "body": "{\n  \"source\": null,\n  \"lastRefreshedTime\": \"{{now format='yyyy-MM-dd'}}\",\n  \"status\": \"A\",\n  \"birthPlace\": null,\n  \"sex\": \"F\",\n  \"surname\": \"TEST\",\n  \"dateOfDeath\": null,\n  \"personNo\": \"{{request.query.id_number}}\",\n  \"firstName\": \"TEST\",\n  \"dateOfBirth\": \"1992-06-03\"\n}",
+      "body": "{\n  \"source\": \"{{randomValue length=8 type='ALPHANUMERIC'}}\",\n  \"lastRefreshedTime\": \"{{now format='yyyy-MM-dd'}}\",\n  \"status\": \"A\",\n  \"birthPlace\": \"{{randomValue length=10 type='ALPHANUMERIC'}}\",\n  \"sex\": \"F\",\n  \"surname\": \"{{randomValue length=6 type='ALPHANUMERIC'}}\",\n  \"dateOfDeath\": null,\n  \"personNo\": \"{{request.query.id_number}}\",\n  \"firstName\": \"{{randomValue length=6 type='ALPHANUMERIC'}}\",\n  \"dateOfBirth\": \"1992-06-03\"\n}",
       "transformers": ["response-template"]
     }
     }
@@ -1648,7 +1790,7 @@ data:
       "headers": {
         "Content-Type": "application/json"
       },
-      "body": "{\n  \"res\": \"ok\",\n  \"companyinfo\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": {\n      \"id\": null,\n      \"name\": \"MOCKED INVESTMENTS {{request.query.companyNum}}\",\n      \"companyNumber\": \"{{request.query.companyNum}}\",\n      \"type\": \"(PRIVATE) LIMITED\",\n      \"physicalAddress\": \"95 Borrowdale Road, Borrowdale, Harare\",\n      \"postalAddress\": \"95 Borrowdale Road, Borrowdale, Harare\",\n      \"city\": \"Harare\",\n      \"telNumber\": \"250780979226\",\n      \"mobileNumber\": \"250780979226\",\n      \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n    }\n  },\n  \"directors\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": [\n      {\n        \"names\": \"SANTANA CHIGWESHE\",\n        \"surname\": \"CHIGWESHE\",\n        \"id_no\": \"631524168M42\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n      },\n      {\n        \"names\": \"TEST3\",\n        \"surname\": \"TEST3\",\n        \"id_no\": \"634524168M42\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n      }\n    ]\n  },\n  \"shareholders\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": [\n      {\n        \"names\": \"TEST4 TEST4\",\n        \"surname\": \"TEST4\",\n        \"id_no\": \"635524168M42\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\",\n        \"shareType\": null,\n        \"ordinaryshares\": 50,\n        \"prefereceShares\": 0\n      },\n      {\n        \"names\": \"TEST5\",\n        \"surname\": \"TEST5\",\n        \"id_no\": \"636524168M42\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\",\n        \"shareType\": null,\n        \"ordinaryshares\": 50,\n        \"prefereceShares\": 0\n      }\n    ]\n  },\n  \"seccretary\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": {\n      \"names\": \"TEST7 TEST7\",\n      \"surname\": \"TEST7\",\n      \"id_no\": \"637524168M42\",\n      \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n      \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n    }\n  }\n}",
+      "body": "{\n  \"res\": \"ok\",\n  \"companyinfo\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": {\n      \"id\": \"{{randomValue length=10 type='NUMERIC'}}\",\n      \"name\": \"MOCKED INVESTMENTS {{request.query.companyNum}}\",\n      \"companyNumber\": \"{{request.query.companyNum}}\",\n      \"type\": \"(PRIVATE) LIMITED\",\n      \"physicalAddress\": \"95 Borrowdale Road, Borrowdale, Harare\",\n      \"postalAddress\": \"95 Borrowdale Road, Borrowdale, Harare\",\n      \"city\": \"Harare\",\n      \"telNumber\": \"{{randomValue length=13 type='NUMERIC'}}\",\n      \"mobileNumber\": \"{{randomValue length=13 type='NUMERIC'}}\",\n      \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n    }\n  },\n  \"directors\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": [\n      {\n        \"names\": \"SANTANA CHIGWESHE\",\n        \"surname\": \"CHIGWESHE\",\n        \"id_no\": \"{{randomValue length=13 type='NUMERIC'}}\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n      },\n      {\n        \"names\": \"TEST3\",\n        \"surname\": \"TEST3\",\n        \"id_no\": \"{{randomValue length=12 type='NUMERIC'}}\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n      }\n    ]\n  },\n  \"shareholders\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": [\n      {\n        \"names\": \"TEST4 TEST4\",\n        \"surname\": \"TEST4\",\n        \"id_no\": \"{{randomValue length=12 type='NUMERIC'}}\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\",\n        \"shareType\": null,\n        \"ordinaryshares\": 50,\n        \"prefereceShares\": 0\n      },\n      {\n        \"names\": \"TEST5\",\n        \"surname\": \"TEST5\",\n        \"id_no\": \"{{randomValue length=12 type='NUMERIC'}}\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\",\n        \"shareType\": null,\n        \"ordinaryshares\": 50,\n        \"prefereceShares\": 0\n      }\n    ]\n  },\n  \"seccretary\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": {\n      \"names\": \"TEST7 TEST7\",\n      \"surname\": \"TEST7\",\n      \"id_no\": \"{{randomValue length=12 type='NUMERIC'}}\",\n      \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n      \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n    }\n  }\n}",
       "transformers": ["response-template"]
     }
     }
