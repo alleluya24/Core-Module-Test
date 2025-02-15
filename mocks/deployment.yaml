@@ -34,17 +34,6 @@ metadata:
   name: wiremock-config
   namespace: shared
 data:
-  mappings-1.json: |
-    {
-      "request": {
-        "method": "GET",
-        "urlPath": "/mocks/api/response1"
-      },
-      "response": {
-        "status": 200,
-        "body": "Response for endpoint 1"
-      }
-    }
   mappings-2.json: |
     {
       "request": {
@@ -64,39 +53,6 @@ data:
         "jsonBody": {
           "username": "documa",
           "token": "LCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5MjMwMjkyLCJqdGkiOiJjZmQzYjBiZWMwZDg0YzM2YjRkOGY4MzRiNWEzZmI3MyIsInVzZXJfaWQiOjE0fQ.od3FW3VeQu7wJmA_h94l0r_QPdhcKoCVU7n0fSWswi4"
-        }
-      }
-    }
-  mappings-4.json: |
-    {
-      "request": {
-        "method": "GET",
-        "urlPath": "/mocks/api/response3"
-      },
-      "response": {
-        "status": 404,
-        "body": "Not found"
-      }
-    }
-  mappings-5.json: |
-    {
-      "request": {
-        "method": "POST",
-        "urlPath": "/mocks/service/token/",
-        "bodyPatterns": [
-          {
-            "equalToJson": "{\"username\": \"documa\",\"password\":\"documa\"}"
-          }
-        ]
-      },
-      "response": {
-        "status": 200,
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "jsonBody": {
-          "refresh": "documa",
-          "access": "LCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5MjMwMjkyLCJqdGkiOiJjZmQzYjBiZWMwZDg0YzM2YjRkOGY4MzRiNWEzZmI3MyIsInVzZXJfaWQiOjE0fQ.od3FW3VeQu7wJmA_h94l0r_QPdhcKoCVU7n0fSWswi4"
         }
       }
     }
@@ -122,16 +78,16 @@ data:
         }
       }
     }
-  mappings-6.json: |
+  mappings-58.json: |
     {
       "request": {
-        "method": "GET",
-        "urlPath": "/mocks/service/person",
-        "queryParameters": {
-          "id_number": {
-            "equalTo": "020225220I02"
+        "method": "POST",
+        "urlPath": "/mocks/service/token/",
+        "bodyPatterns": [
+          {
+            "equalToJson": "{\"username\": \"documa\",\"password\":\"documa\"}"
           }
-        }
+        ]
       },
       "response": {
         "status": 200,
@@ -139,106 +95,8 @@ data:
           "Content-Type": "application/json"
         },
         "jsonBody": {
-          "source": null,
-          "lastRefreshedTime": "2024-07-05",
-          "status": "E",
-          "birthPlace": null,
-          "sex": null,
-          "surname": null,
-          "dateOfDeath": null,
-          "personNo": "020225220I02",
-          "firstName": null,
-          "dateOfBirth": null
-        }
-      }
-    }
-  mappings-7.json: |
-    {
-      "request": {
-        "method": "GET",
-        "urlPath": "/mocks/service/person",
-        "queryParameters": {
-          "id_number": {
-            "equalTo": "020232556V02"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "jsonBody": {
-          "source": null,
-          "lastRefreshedTime": "2024-07-05",
-          "status": "E",
-          "birthPlace": null,
-          "sex": null,
-          "surname": null,
-          "dateOfDeath": null,
-          "personNo": "020232556V02",
-          "firstName": null,
-          "dateOfBirth": null
-        }
-      }
-    }
-  mappings-8.json: |
-    {
-      "request": {
-        "method": "GET",
-        "urlPath": "/mocks/service/person",
-        "queryParameters": {
-          "id_number": {
-            "equalTo": "130099636J13"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "jsonBody": {
-          "source": null,
-          "lastRefreshedTime": "2024-07-05",
-          "status": "D",
-          "birthPlace": "CHIPINGE",
-          "sex": "F",
-          "surname": "MWANDIWONESA",
-          "dateOfDeath": "2014-10-19",
-          "personNo": "130099636J13",
-          "firstName": "SHEKAI",
-          "dateOfBirth": "1972-12-11"
-        }
-      }
-    }
-  mappings-08.json: |
-    {
-      "request": {
-        "method": "GET",
-        "urlPath": "/mocks/service/person",
-        "queryParameters": {
-          "id_number": {
-            "equalTo": "131099636J13"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "jsonBody": {
-          "source": null,
-          "lastRefreshedTime": "2024-01-02",
-          "status": "D",
-          "birthPlace": "CHIPINGE",
-          "sex": "M",
-          "surname": "LEGEND",
-          "dateOfDeath": "2014-10-19",
-          "personNo": "131099636J13",
-          "firstName": "JOHNY",
-          "dateOfBirth": "1979-11-21"
+          "refresh": "documa",
+          "access": "LCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE5MjMwMjkyLCJqdGkiOiJjZmQzYjBiZWMwZDg0YzM2YjRkOGY4MzRiNWEzZmI3MyIsInVzZXJfaWQiOjE0fQ.od3FW3VeQu7wJmA_h94l0r_QPdhcKoCVU7n0fSWswi4"
         }
       }
     }
@@ -1761,7 +1619,7 @@ data:
       "urlPath": "/mocks/service/person",
       "queryParameters": {
         "id_number": {
-          "matches": ".*"
+          "matches": "^(?!.*0M00$).*"
         }
       }
     },
@@ -1770,7 +1628,7 @@ data:
       "headers": {
         "Content-Type": "application/json"
       },
-      "body": "{\n  \"source\": \"{{randomValue length=8 type='ALPHANUMERIC'}}\",\n  \"lastRefreshedTime\": \"{{now format='yyyy-MM-dd'}}\",\n  \"status\": \"A\",\n  \"birthPlace\": \"{{randomValue length=10 type='ALPHANUMERIC'}}\",\n  \"sex\": \"F\",\n  \"surname\": \"{{randomValue length=6 type='ALPHANUMERIC'}}\",\n  \"dateOfDeath\": null,\n  \"personNo\": \"{{request.query.id_number}}\",\n  \"firstName\": \"{{randomValue length=6 type='ALPHANUMERIC'}}\",\n  \"dateOfBirth\": \"1992-06-03\"\n}",
+      "body": "{\n  \"source\": \"{{randomValue length=8 type='ALPHANUMERIC'}}\",\n  \"lastRefreshedTime\": \"{{now format='yyyy-MM-dd'}}\",\n  \"status\": \"A\",\n  \"birthPlace\": \"{{randomValue length=10 type='ALPHABETIC'}}\",\n  \"sex\": \"F\",\n  \"surname\": \"{{randomValue length=6 type='ALPHABETIC'}}\",\n  \"dateOfDeath\": null,\n  \"personNo\": \"{{request.query.id_number}}\",\n  \"firstName\": \"{{randomValue length=6 type='ALPHABETIC'}}\",\n  \"dateOfBirth\": \"1992-06-03\"\n}",
       "transformers": ["response-template"]
     }
     }
@@ -1781,7 +1639,8 @@ data:
       "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
       "queryParameters": {
         "companyNum": {
-          "matches": ".*"
+          "matches": "^(?!.*000$).*"
+
         }
       }
     },
@@ -1792,5 +1651,35 @@ data:
       },
       "body": "{\n  \"res\": \"ok\",\n  \"companyinfo\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": {\n      \"id\": \"{{randomValue length=10 type='NUMERIC'}}\",\n      \"name\": \"MOCKED INVESTMENTS {{request.query.companyNum}}\",\n      \"companyNumber\": \"{{request.query.companyNum}}\",\n      \"type\": \"(PRIVATE) LIMITED\",\n      \"physicalAddress\": \"95 Borrowdale Road, Borrowdale, Harare\",\n      \"postalAddress\": \"95 Borrowdale Road, Borrowdale, Harare\",\n      \"city\": \"Harare\",\n      \"telNumber\": \"{{randomValue length=13 type='NUMERIC'}}\",\n      \"mobileNumber\": \"{{randomValue length=13 type='NUMERIC'}}\",\n      \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n    }\n  },\n  \"directors\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": [\n      {\n        \"names\": \"SANTANA CHIGWESHE\",\n        \"surname\": \"CHIGWESHE\",\n        \"id_no\": \"{{randomValue length=13 type='NUMERIC'}}\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n      },\n      {\n        \"names\": \"TEST3\",\n        \"surname\": \"TEST3\",\n        \"id_no\": \"{{randomValue length=12 type='NUMERIC'}}\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n      }\n    ]\n  },\n  \"shareholders\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": [\n      {\n        \"names\": \"TEST4 TEST4\",\n        \"surname\": \"TEST4\",\n        \"id_no\": \"{{randomValue length=12 type='NUMERIC'}}\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\",\n        \"shareType\": null,\n        \"ordinaryshares\": 50,\n        \"prefereceShares\": 0\n      },\n      {\n        \"names\": \"TEST5\",\n        \"surname\": \"TEST5\",\n        \"id_no\": \"{{randomValue length=12 type='NUMERIC'}}\",\n        \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n        \"email\": \"{{request.query.companyNum}}@yopmail.com\",\n        \"shareType\": null,\n        \"ordinaryshares\": 50,\n        \"prefereceShares\": 0\n      }\n    ]\n  },\n  \"seccretary\": {\n    \"contentType\": null,\n    \"serializerSettings\": null,\n    \"statusCode\": null,\n    \"value\": {\n      \"names\": \"TEST7 TEST7\",\n      \"surname\": \"TEST7\",\n      \"id_no\": \"{{randomValue length=12 type='NUMERIC'}}\",\n      \"address\": \"95 Borrowdale Road Borrowdale, Harare\",\n      \"email\": \"{{request.query.companyNum}}@yopmail.com\"\n    }\n  }\n}",
       "transformers": ["response-template"]
+    }
+    }
+  mappings-100.json: |
+    {
+    "request": {
+      "method": "GET",
+      "urlPath": "/mocks/api/v1/reports/getCompanyInfos",
+      "queryParameters": {
+        "companyNum": {
+          "matches": ".*000$"
+        }
+      }
+    },
+    "response": {
+      "status": 404
+    }
+    }
+  mappings-300.json: |-
+    {
+    "request": {
+      "method": "GET",
+      "urlPath": "/mocks/service/person",
+      "queryParameters": {
+        "id_number": {
+          "matches": ".*0M00$"
+        }
+      }
+    },
+    "response": {
+      "status": 404
     }
     }
