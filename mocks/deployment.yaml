@@ -1683,3 +1683,42 @@ data:
       "status": 404
     }
     }
+  mappings-40.json: |
+    {
+      "request": {
+        "method": "POST",
+        "url": "/fcc-validation",
+        "bodyPatterns": [
+          {
+            "contains": "<REF_NO>011FTMC232400538</REF_NO>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/xml; charset=utf-8"
+        },
+        "body": "<?xml version=\"1.0\" encoding=\"utf-16\"?>\n<FccDataRefNoValidation xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\n  <TransactionReferenceNumber>011FTMC232400538</TransactionReferenceNumber>\n  <AmountPaid>20.00</AmountPaid>\n  <Currency>USD</Currency>\n  <ServiceType>MCA</ServiceType>\n  <PaymentDate>2023-08-28T00:00:00</PaymentDate>\n  <PayerIdentity>25572450023</PayerIdentity>\n  <TransactionDescription>REGISTRATION FEE WALTER RUNGANGA</TransactionDescription>\n</FccDataRefNoValidation>"
+      }
+    }
+    
+  mappings-41.json: |
+    {
+      "request": {
+        "method": "POST",
+        "url": "/fcc-validation",
+        "bodyPatterns": [
+          {
+            "contains": "<REF_NO>INVALIDREF123</REF_NO>"
+          }
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/xml; charset=utf-8"
+        },
+        "body": "<Error>No transaction found.</Error>"
+      }
+    }
